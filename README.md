@@ -10,7 +10,7 @@ in order to retrieve tasks as fast as possible.
 *ldap.properties* contains properties for authenticate user with an active 
 directory. If you don't want to use an AD, modify *spring-security.xml* with
 such values :   
-<code>
+```xml
 <s:authentication-manager>
 	<!-- <s:authentication-provider ref="ldapAuthProvider" /> -->
 	<s:authentication-provider>
@@ -19,6 +19,6 @@ such values :
 		</s:user-service>
 	</s:authentication-provider>
 </s:authentication-manager>
-</code>
+```
 
 *svn.properties* contains the url of the repository.
