@@ -16,6 +16,8 @@
 	  	<hsqldb.version>2.2.9</hsqldb.version>
 	  	<slf4j.version>1.7.2</slf4j.version>
 	  	<validation.version>4.3.1.Final</validation.version>
+	  	<lucene.version>3.6.0</lucene.version>
+	  	<junit.version>4.8.2</junit.version>
 	</properties>
 
 	<repositories>
@@ -54,6 +56,7 @@
 	    	<version>${spring.version}</version>
 	    </dependency>
 	    
+	    <!-- Dependencies for spring security -->
 	    <dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
@@ -80,12 +83,14 @@
 	        <version>${spring.version}</version>
 	    </dependency>
 		
+		<!-- Dependencies for ldap -->
 		<dependency>
 		    <groupId>org.springframework.ldap</groupId>
 		    <artifactId>spring-ldap-core</artifactId>
 		    <version>${ldap.version}</version>
 		</dependency>
 		
+		<!-- Common dependencies -->		
 	    <dependency>
 	    	<groupId>cglib</groupId>
 	    	<artifactId>cglib</artifactId>
@@ -102,6 +107,27 @@
 			<groupId>org.tmatesoft.svnkit</groupId>
 			<artifactId>svnkit</artifactId>
 			<version>${svnkit.version}</version>
+		</dependency>
+		
+		<!-- Dependencies for lucene -->
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>${lucene.version}</version>
+		</dependency>
+		
+		<!-- Dependencies for tests -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Project - ${projectName}</title>
+<title>Results</title>
 </head>
 <body>
 	SVNLab
@@ -18,21 +18,10 @@
 		<div><a href="<c:url value="/home" />">Home</a> | <a href="<c:url value="/j_spring_security_logout" />">Logout</a></div>
 		
 		<div>
-		<c:url var="searchUrl" value="/search/" />
-		<form:form commandName="search" action="${searchUrl}" method="post">
-			<form:hidden path="path" />
-			<form:input path="description" /><input type="submit" value="Search" />
-		</form:form>
-		</div>
-		
-		<div>
-		<c:if test="${!empty entries}">
-		<c:forEach items="${entries}" var="entry">
-			<c:if test="${entry.type==dir}">
-				<c:url var="link" value="${path}/${entry.name}" context="${pageContext.request.contextPath}/project" />
-				<div><a href="${link}">${entry.name}</a></div>
-			</c:if>
-		</c:forEach>
+		<c:if test="${!empty commits}">
+			<c:forEach items="${commits}" var="commit">
+				<div>${commit.title}</div>
+			</c:forEach>
 		</c:if>
 		</div>
 	</sec:authorize>

@@ -3,7 +3,7 @@ package fr.free.naoj.svnlab.entity;
 public class SearchCriteria {
 
 	private String path;
-	private String keyWords;
+	private String description;
 
 	public String getPath() {
 		return path;
@@ -13,11 +13,11 @@ public class SearchCriteria {
 		this.path = path;
 	}
 
-	public String getKeyWords() {
-		return keyWords;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setKeyWords(String keyWords) {
-		this.keyWords = keyWords;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }
