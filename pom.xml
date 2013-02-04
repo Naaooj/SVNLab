@@ -1,0 +1,107 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fr.free.naoj</groupId>
+	<artifactId>svnlab</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>SVNLab</name>
+	
+	<properties>
+		<servlet.version>2.5</servlet.version>
+		<svnkit.version>1.7.8</svnkit.version>
+		<spring.version>3.1.3.RELEASE</spring.version>
+		<ldap.version>1.3.1.RELEASE</ldap.version>
+	  	<jstl.version>1.2</jstl.version>
+	  	<hibernate.version>4.1.8.Final</hibernate.version>
+	  	<hsqldb.version>2.2.9</hsqldb.version>
+	  	<slf4j.version>1.7.2</slf4j.version>
+	  	<validation.version>4.3.1.Final</validation.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>SVNKit</id>
+			<name>SVNKit repository</name>
+			<layout>default</layout>
+			<url>http://maven.tmatesoft.com/content/repositories/releases</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+  
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${servlet.version}</version>
+		</dependency>
+  
+		<dependency>
+	    	<groupId>org.springframework</groupId>
+	    	<artifactId>spring-web</artifactId>
+	    	<version>${spring.version}</version>
+	    </dependency>
+		<dependency>
+	    	<groupId>org.springframework</groupId>
+	    	<artifactId>spring-webmvc</artifactId>
+	    	<version>${spring.version}</version>
+	    </dependency>
+	    
+	    <dependency>
+	    	<groupId>org.springframework</groupId>
+	    	<artifactId>spring-orm</artifactId>
+	    	<version>${spring.version}</version>
+	    </dependency>
+	    
+	    <dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-ldap</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+	        <groupId>org.springframework.security</groupId>
+	        <artifactId>spring-security-taglibs</artifactId>
+	        <version>${spring.version}</version>
+	    </dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.ldap</groupId>
+		    <artifactId>spring-ldap-core</artifactId>
+		    <version>${ldap.version}</version>
+		</dependency>
+		
+	    <dependency>
+	    	<groupId>cglib</groupId>
+	    	<artifactId>cglib</artifactId>
+	    	<version>2.2.2</version>
+	    </dependency>
+	    
+	    <dependency>
+	    	<groupId>javax.servlet</groupId>
+	    	<artifactId>jstl</artifactId>
+	    	<version>${jstl.version}</version>
+	    </dependency>
+	    
+		<dependency>
+			<groupId>org.tmatesoft.svnkit</groupId>
+			<artifactId>svnkit</artifactId>
+			<version>${svnkit.version}</version>
+		</dependency>
+	</dependencies>
+</project>
