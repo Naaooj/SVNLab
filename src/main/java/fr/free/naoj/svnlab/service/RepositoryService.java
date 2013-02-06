@@ -9,4 +9,6 @@ public interface RepositoryService {
 	List<Entry> getProjects();
 	
 	List<Entry> getEntries(String path);
+	
+	CommitsDetailsHolder getCommits(String path, int limit);
 }

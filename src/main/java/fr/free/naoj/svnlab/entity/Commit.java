@@ -1,10 +1,19 @@
 package fr.free.naoj.svnlab.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
+import fr.free.naoj.svnlab.utils.StringUtils;
 
+/**
+ * <p></p>
+ *
+ * @author Johann Bernez
+ */
 public class Commit {
 
+	private static final transient SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+	
 	private Integer id;
 	
 	private String principal;
@@ -12,7 +21,7 @@ public class Commit {
 	private String description;
 	
 	private List<Modification> modifications;
-	private Integer revisionNumber;
+	private Long revisionNumber;
 	
 	private History history;
 
@@ -56,19 +65,32 @@ public class Commit {
 		this.modifications = modifications;
 	}
 
-	public Integer getRevisionNumber() {
+	public Long getRevisionNumber() {
 		return revisionNumber;
 	}
 
-	public void setRevisionNumber(Integer revisionNumber) {
+	public void setRevisionNumber(Long revisionNumber) {
 		this.revisionNumber = revisionNumber;
 	}
 
 	public History getHistory() {
+		if (history == null) {
+			history = new History();
+		}
 		return history;
 	}
 
 	public void setHistory(History history) {
 		this.history = history;
+	}
+	
+	public String getDate() {
+		String date = StringUtils.EMPTY_STRING;
+		
+		if (getHistory().getCreatedAt() != null) {
+			date = sdf.format(getHistory().getCreatedAt().getTime());
+		}
+		
+		return date;
 	}
 }

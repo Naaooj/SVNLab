@@ -1,5 +1,10 @@
 package fr.free.naoj.svnlab.entity;
 
+/**
+ * <p></p>
+ *
+ * @author Johann Bernez
+ */
 public class Modification {
 
 	private Integer id;
@@ -7,7 +12,7 @@ public class Modification {
 	private Integer fkCommit;
 	
 	private String path;
-	private Integer revisionNumber;
+	private Long revisionNumber;
 	
 	public Integer getId() {
 		return id;
@@ -33,11 +38,11 @@ public class Modification {
 		this.path = path;
 	}
 
-	public Integer getRevisionNumber() {
+	public Long getRevisionNumber() {
 		return revisionNumber;
 	}
 
-	public void setRevisionNumber(Integer revisionNumber) {
+	public void setRevisionNumber(Long revisionNumber) {
 		this.revisionNumber = revisionNumber;
 	}	
 }

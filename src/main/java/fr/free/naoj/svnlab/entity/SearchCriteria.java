@@ -1,5 +1,10 @@
 package fr.free.naoj.svnlab.entity;
 
+/**
+ * <p></p>
+ *
+ * @author Johann Bernez
+ */
 public class SearchCriteria {
 
 	private String path;

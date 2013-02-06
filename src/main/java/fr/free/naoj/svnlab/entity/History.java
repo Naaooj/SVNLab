@@ -2,6 +2,11 @@ package fr.free.naoj.svnlab.entity;
 
 import java.util.Calendar;
 
+/**
+ * <p></p>
+ *
+ * @author Johann Bernez
+ */
 public class History {
 
 	private String createdBy;

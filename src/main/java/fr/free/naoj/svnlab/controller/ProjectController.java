@@ -18,7 +18,7 @@ import fr.free.naoj.svnlab.service.RepositoryService;
 import fr.free.naoj.svnlab.service.svn.Entry;
 
 @Controller
-@RequestMapping("/project")
+@RequestMapping
 @SessionAttributes
 public class ProjectController {
 	
@@ -30,15 +30,14 @@ public class ProjectController {
 		return new SearchCriteria();
 	}
 	
-	@RequestMapping("/")
+	@RequestMapping("/project/")
 	public String noProjectSelected() {
 		return "redirect:/home";
 	}
 	
-	@RequestMapping(value={"/{projectName}", "/{projectName}/**"}, method=RequestMethod.GET)
+	@RequestMapping(value={"/project/{projectName}", "/project/{projectName}/**"}, method=RequestMethod.GET)
 	public String projectDetails(Model model, @PathVariable("projectName") String projectName, HttpServletRequest request) {
-		String path = request.getRequestURL().toString();
-		path = "/" + path.substring(path.indexOf(projectName));
+		String path = getPathFromRequest(request, projectName);
 		
 		SearchCriteria searchCriteria = getSearchCriteria();
 		searchCriteria.setPath(path);
@@ -46,10 +45,33 @@ public class ProjectController {
 		List<Entry> entries = repositoryService.getEntries(path);
 		
 		model.addAttribute("path", path);
+		model.addAttribute("paths", path.split("/"));
 		model.addAttribute("projectName", projectName);
 		model.addAttribute("entries", entries);
 		model.addAttribute("search", searchCriteria);
 		
 		return "project";
+	}
+	
+	@RequestMapping(value={"/viewLogs/{projectName}", "/viewLogs/{projectName}/**"}, method=RequestMethod.GET)
+	public String viewProjectLogs(Model model, @PathVariable("projectName") String projectName, HttpServletRequest request) {
+		String path = getPathFromRequest(request, projectName);
+		
+		model.addAttribute("holder", repositoryService.getCommits(path, 10));
+		
+		return "logs";
+	}
+	
+	private String getPathFromRequest(HttpServletRequest request, String projectName) {
+		String path = request.getRequestURL().toString();
+		path = path.substring(path.indexOf(projectName));
+		if (!path.startsWith("/")) {
+			path = "/" + path; 
+		}
+		if (path.length() > 1 && path.endsWith("/")) {
+			path = path.substring(0, path.length() -1);
+		}
+		System.out.println(path);
+		return path;
 	}
 }

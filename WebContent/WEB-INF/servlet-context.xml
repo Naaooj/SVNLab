@@ -33,6 +33,7 @@
     <!-- Enables the Spring MVC @Controller programming model -->
     <mvc:annotation-driven />
     <mvc:default-servlet-handler/>
+    <mvc:resources location="/resources/" mapping="/resources/**"/>
  	
  	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
  		<property name="basename" value="locale/messages" />

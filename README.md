@@ -7,7 +7,7 @@ in order to retrieve tasks as fast as possible.
 
 ## Configuration
 
-*ldap.properties* contains properties for authenticate user with an active 
+*ldap.properties* contains properties to authenticate users with an active 
 directory. If you don't want to use an AD, modify *spring-security.xml* with
 such values :   
 ```xml
