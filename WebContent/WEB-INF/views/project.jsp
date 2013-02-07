@@ -129,6 +129,7 @@
 						var lastRev;
 						var logsAlreadyLoaded = Boolean(hasLogs());
 						
+
 						if (logsAlreadyLoaded) {
 							table = logs.find('table');
 							lastRev = logs.find('input#lastRev');
@@ -167,6 +168,10 @@
 						}
 						
 						if (!logsAlreadyLoaded) {
+							if (result.commits.length == 0) {
+								logs.empty();
+								logs.append('No log found...');
+							}
 							slide(false);
 						}
 						
