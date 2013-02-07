@@ -96,7 +96,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 	}
 	
 	@Override
-	public CommitsDetailsHolder getCommits(String path, int limit) {
+	public CommitsDetailsHolder getCommits(String path, int limit, long start) {
 		CommitsDetailsHolder commitHolder = null;
 		
 		long startRevision = 0;
@@ -108,7 +108,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 		int step = limit + 100;
 		
 		try {
-			long endRevision = getRepository().getLatestRevision();
+			long endRevision = start == -1 ? getRepository().getLatestRevision() : start - 1;
 			startRevision = endRevision - step;
 			
 			final List<Commit> logs = new ArrayList<Commit>();
@@ -118,15 +118,15 @@ public class RepositoryServiceImpl implements RepositoryService {
 			validator.list = new WeakReference<List<?>>(logs);
 			
 			do {
-				getRepository().log(new String[]{path}, startRevision, endRevision, true, true, -1, new ISVNLogEntryHandler() {
+				getRepository().log(new String[]{path}, startRevision, endRevision, true, true, -1, true, new String[]{}, new ISVNLogEntryHandler() {
 					@Override
 					public void handleLogEntry(SVNLogEntry logEntry) throws SVNException {
 						if (!validator.isLimitReached()) {
 							logs.add(convertSVNLogEntry(logEntry));
 						} else {
-							holder.setMoreCommits(true);
 							validator.noMoreResult = true;
 						}
+						holder.setMoreCommits(true);
 					}
 				});
 				
@@ -138,6 +138,10 @@ public class RepositoryServiceImpl implements RepositoryService {
 			} while (!validator.isLimitReached());
 			
 			Collections.sort(logs, new DescendingCommitComparator());
+			
+			if (holder.getCommits().size() > 0) {
+				holder.setLastRevision(holder.getCommits().get(holder.getCommits().size() - 1).getRevisionNumber());
+			}
 			
 			commitHolder = holder;
 		} catch (Throwable t) {

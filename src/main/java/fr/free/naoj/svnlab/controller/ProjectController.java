@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fr.free.naoj.svnlab.entity.SearchCriteria;
+import fr.free.naoj.svnlab.service.CommitsDetailsHolder;
 import fr.free.naoj.svnlab.service.RepositoryService;
 import fr.free.naoj.svnlab.service.svn.Entry;
 
@@ -54,12 +56,16 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value={"/viewLogs/{projectName}", "/viewLogs/{projectName}/**"}, method=RequestMethod.GET)
-	public String viewProjectLogs(Model model, @PathVariable("projectName") String projectName, HttpServletRequest request) {
+	public @ResponseBody CommitsDetailsHolder viewProjectLogs(Model model, @PathVariable("projectName") String projectName, HttpServletRequest request) {
 		String path = getPathFromRequest(request, projectName);
 		
-		model.addAttribute("holder", repositoryService.getCommits(path, 10));
+		int start = -1;
+		String attr;
+		if ((attr=request.getParameter("start")) != null) {
+			start = Integer.parseInt(attr);
+		}
 		
-		return "logs";
+		return repositoryService.getCommits(path, 10, start);
 	}
 	
 	private String getPathFromRequest(HttpServletRequest request, String projectName) {
@@ -71,7 +77,6 @@ public class ProjectController {
 		if (path.length() > 1 && path.endsWith("/")) {
 			path = path.substring(0, path.length() -1);
 		}
-		System.out.println(path);
 		return path;
 	}
 }

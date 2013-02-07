@@ -19,6 +19,7 @@
 	  	<lucene.version>3.6.0</lucene.version>
 	  	<junit.version>4.8.2</junit.version>
 	  	<tiles.version>2.2.2</tiles.version>
+	  	<jackson.version>1.9.11</jackson.version>
 	</properties>
 
 	<repositories>
@@ -121,6 +122,13 @@
 			<artifactId>svnkit</artifactId>
 			<version>${svnkit.version}</version>
 		</dependency>
+		
+		<dependency>
+    		<groupId>org.codehaus.jackson</groupId>
+    		<artifactId>jackson-mapper-asl</artifactId>
+    		<version>${jackson.version}</version>
+   		</dependency>
+		
 		
 		<!-- Dependencies for lucene -->
 		<dependency>

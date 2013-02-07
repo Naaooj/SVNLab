@@ -10,5 +10,5 @@ public interface RepositoryService {
 	
 	List<Entry> getEntries(String path);
 	
-	CommitsDetailsHolder getCommits(String path, int limit);
+	CommitsDetailsHolder getCommits(String path, int limit, long start);
 }

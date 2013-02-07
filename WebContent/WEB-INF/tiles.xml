@@ -27,6 +27,4 @@
 		<put-attribute name="body" value="/WEB-INF/views/search.jsp" />
 	</definition>
 
-	<definition name="logs" template="/WEB-INF/views/logs.jsp" />
-
 </tiles-definitions>

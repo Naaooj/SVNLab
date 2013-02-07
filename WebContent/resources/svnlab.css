@@ -104,9 +104,20 @@ table {
 	padding: 2px;
 	overflow-y: auto;
 	border: 1px solid #b7c7cf;
-}
-#projectContent {
 	border-bottom-color: #d8e6ec;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
+}
+
+#logs table tr {
+	vertical-align: top;
+}
+#logs table td {
+	border-bottom: 1px solid #e6f1f6;
+}
+#logs .lbr {
+	border-right: 1px solid #e6f1f6;
+}
+#logs .principal {
+	width: 70px;
 }

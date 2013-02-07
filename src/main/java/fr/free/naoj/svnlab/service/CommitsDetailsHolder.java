@@ -14,6 +14,7 @@ public class CommitsDetailsHolder {
 
 	private boolean moreCommits = false;
 	private final List<Commit> commits;
+	private long lastRevision;
 	
 	public CommitsDetailsHolder(List<Commit> commits) {
 		if (commits == null) {
@@ -33,5 +34,13 @@ public class CommitsDetailsHolder {
 
 	public List<Commit> getCommits() {
 		return commits;
+	}
+
+	public long getLastRevision() {
+		return lastRevision;
+	}
+
+	public void setLastRevision(long lastRevision) {
+		this.lastRevision = lastRevision;
 	}
 }

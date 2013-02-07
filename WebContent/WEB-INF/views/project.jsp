@@ -57,15 +57,12 @@
 				return padding;
 			}
 			
-			function slide(result) {
+			function slide(clear) {
 				var padding = getPadding();
 				var ec = $("#projectContent");
 				var cw = parseInt(ec.css('width'));
 				var el = $("#logs");
 				
-				if (result != null) {
-					el.append(result);
-				}
 				ec.animate({
 					left: parseInt(ec.css('left'), 10) == padding ? -ec.outerWidth() : padding
 				}, {
@@ -75,7 +72,7 @@
 					}, 
 					complete: function() {
 						el.css('left', parseInt(ec.css('left')) + cw + 3*padding);
-						if (result == null) {
+						if (clear) {
 							el.empty();
 						}
 					}
@@ -90,15 +87,90 @@
 				$("#loader").css("visibility", "hidden");
 			}
 			
+			function generateLogsEndHref() {
+				var hash = "#viewLogs";
+				var ctx = "/project";
+				var href = $(location).attr("href");
+				href = href.substr(href.indexOf(ctx) + ctx.length);
+				var index = 0;
+				var generatedHref = null;
+				if ((index=href.indexOf(hash)) !== -1) {
+					var startPath = href.substr(0, index);
+					var endPath = href.substr(index + hash.length);
+					generatedHref = startPath + endPath;
+				}
+				return generatedHref;
+			}
+			
+			function generateLogsHref(path) {
+				return "${pageContext.request.contextPath}/viewLogs" + path;
+			}
+			
+			function hasLogs() {
+				var hasLogs = $('#logs').children().length != 0;
+				return hasLogs;
+			}
+			
 			function loadLogs(path) {
+				if (path == null) {
+					return;
+				}
+				
 				showLoader();
-				var req = "${pageContext.request.contextPath}/viewLogs" + path;
+
+				var req = generateLogsHref(path);
+				
 				$.ajax({
 					url: req,
 					type: 'GET',
 					success: function(result) {
+						var logs = $('#logs');
+						var table;
+						var lastRev;
+						var logsAlreadyLoaded = Boolean(hasLogs());
+						
+						if (logsAlreadyLoaded) {
+							table = logs.find('table');
+							lastRev = logs.find('input#lastRev');
+						} else {
+							table = $('<table />');
+							lastRev = $('<input id="lastRev" type="hidden" />');
+							logs.append(table);
+							logs.append(lastRev);
+						}
+						var row;
+						for (var i=0;i<result.commits.length;++i){
+							row = '<tr><td class="lbr">' + result.commits[i].date + '</td>';
+							row += '<td class="lbr principal">' + result.commits[i].principal + '</td>';
+							row += '<td>' + result.commits[i].title + '</td></tr>';
+							table.append($(row));
+						}
+
+						var viewMore = null;
+						console.log(result.commits.length);
+						console.log(result.moreCommits);
+						if (result.moreCommits) {
+							lastRev.attr('value', result.lastRevision);
+							var href = generateLogsEndHref();
+							href += "?start=" + result.lastRevision;
+
+							var loadLogsPt = "loadLogs('"+href+"')";
+							if ((viewMore=logs.find("a#viewMore")).length == 0) {
+								viewMore = $('<a id="viewMore" href="javascript:void(0);">More results (+)</a>');
+								logs.append(viewMore);
+							}
+							viewMore.attr('onClick', loadLogsPt);
+						} else {
+							if ((viewMore=logs.find("a#viewMore")).length != 0) {
+								viewMore.remove();
+							}
+						}
+						
+						if (!logsAlreadyLoaded) {
+							slide(false);
+						}
+						
 						hideLoader();
-						slide(result);
 					},
 					error: function(query, status, error) {
 						hideLoader();
@@ -124,21 +196,13 @@
 				$("#logs").css('width', w);
 				$("#logs").css('height', h);
 				
-				var hash = "#viewLogs";
-				var ctx = "/project";
-				var href = $(location).attr("href");
-				href = href.substr(href.indexOf(ctx) + ctx.length);
-				var index = 0;
-				if ((index=href.indexOf(hash)) !== -1) {
-					var startPath = href.substr(0, index);
-					var endPath = href.substr(index + hash.length);
-					loadLogs(startPath + endPath);
-				}
+				
+				loadLogs(generateLogsEndHref());
 			});
 			
 			function hashChanged(hash) {
 				if (!hash || hash.length == 0) {
-					slide(null);	
+					slide(true);	
 				}
 			}
 			
@@ -157,7 +221,7 @@
 			}
 			
 			$(window).on('beforeunload', function() {
-				slide(" ");
+				slide(false);
 			});
 		</script>
 	</sec:authorize>
