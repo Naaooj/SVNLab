@@ -1,7 +1,15 @@
 package fr.free.naoj.svnlab.entity;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import fr.free.naoj.svnlab.utils.StringUtils;
 
@@ -10,26 +18,43 @@ import fr.free.naoj.svnlab.utils.StringUtils;
  *
  * @author Johann Bernez
  */
-public class Commit {
+@Entity
+@Table(name="svncommit")
+public class Commit implements Serializable {
+
+	/**  */
+	private static final long serialVersionUID = 7736065852790177590L;
 
 	private static final transient SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
 	
-	private Integer id;
+	@Id
+	@Column(name="id")
+	@GeneratedValue
+	private Long id;
 	
+	@Column(name="principal")
 	private String principal;
+	
+	@Column(name="title")
 	private String title;
+	
+	@Column(name="descritption")
 	private String description;
 	
-	private List<Modification> modifications;
+//	@OneToMany(mappedBy="list", targetEntity=Modification.class, fetch=FetchType.LAZY)
+	transient private List<Modification> modifications;
+	
+	@Column(name="revision")
 	private Long revisionNumber;
 	
+	@Embedded
 	private History history;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -143,13 +143,17 @@
 						for (var i=0;i<result.commits.length;++i){
 							row = '<tr><td class="lbr">' + result.commits[i].date + '</td>';
 							row += '<td class="lbr principal">' + result.commits[i].principal + '</td>';
-							row += '<td>' + result.commits[i].title + '</td></tr>';
+							row += '<td class="lbr">' + result.commits[i].title + '</td><td class="lbb">';
+							if (result.commits[i].id != null) {
+								row += '<button onClick="">View details</button>';
+							} else {
+								row += '<button onClick="">Add details</button>';
+							}
+							row += '</td></tr>';
 							table.append($(row));
 						}
 
 						var viewMore = null;
-						console.log(result.commits.length);
-						console.log(result.moreCommits);
 						if (result.moreCommits) {
 							lastRev.attr('value', result.lastRevision);
 							var href = generateLogsEndHref();

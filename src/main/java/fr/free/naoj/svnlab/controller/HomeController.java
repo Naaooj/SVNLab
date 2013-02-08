@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import fr.free.naoj.svnlab.service.CommitService;
 import fr.free.naoj.svnlab.service.RepositoryService;
 
 @Controller
@@ -14,6 +15,8 @@ import fr.free.naoj.svnlab.service.RepositoryService;
 public class HomeController {
 
 	@Autowired private RepositoryService repositoryService;
+	
+	@Autowired private CommitService s;
 	
 	@RequestMapping(value="/")
 	public String root() {

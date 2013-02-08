@@ -70,7 +70,7 @@ public class SearchEngineImpl implements SearchEngine {
 					
 					Document document = createDocument(commit);
 					
-					Term term = new Term("id", Integer.toString(commit.getId()));
+					Term term = new Term("id", Long.toString(commit.getId()));
 					
 					writer.updateDocument(term, document);
 					
@@ -135,7 +135,7 @@ public class SearchEngineImpl implements SearchEngine {
 	private Document createDocument(Commit commit) {
 		Document document = new Document();
 		
-		document.add(new Field(FIELD_ID, Integer.toString(commit.getId()), YES, NOT_ANALYZED_NO_NORMS));
+		document.add(new Field(FIELD_ID, Long.toString(commit.getId()), YES, NOT_ANALYZED_NO_NORMS));
 		document.add(new Field(FIELD_TITLE, commit.getTitle(), YES, NOT_ANALYZED_NO_NORMS));
 		document.add(new Field(FIELD_DESCRIPTION, commit.getDescription(), NO, ANALYZED_NO_NORMS));
 		
@@ -168,7 +168,7 @@ public class SearchEngineImpl implements SearchEngine {
 		Document document = searcher.doc(scoreDoc.doc);
 		
 		Commit commit = new Commit();
-		commit.setId(Integer.parseInt(document.get(FIELD_ID)));
+		commit.setId(Long.parseLong(document.get(FIELD_ID)));
 		commit.setTitle(document.get(FIELD_TITLE));
 		
 		return commit;

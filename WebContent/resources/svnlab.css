@@ -118,6 +118,9 @@ table {
 #logs .lbr {
 	border-right: 1px solid #e6f1f6;
 }
+#logs .lbb {
+	width: 92px;
+}
 #logs .principal {
 	width: 70px;
 }

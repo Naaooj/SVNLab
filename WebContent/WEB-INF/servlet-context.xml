@@ -19,19 +19,16 @@
 		</property>
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
  	</bean>
- 	 
- 	<!-- import resource="./hibernate.xml" /-->
- 
-    <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
- 
+ 	
+ 	<context:annotation-config />
+ 	
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <!-- @Controller, @Service, @Configuration, etc. -->
-    <!-- context:component-scan base-package="$package" /-->
     <context:component-scan base-package="fr.free.naoj.svnlab" />
-    <context:annotation-config />
  
     <!-- Enables the Spring MVC @Controller programming model -->
     <mvc:annotation-driven />
+    
     <mvc:default-servlet-handler/>
     <mvc:resources location="/resources/" mapping="/resources/**"/>
  	
@@ -39,12 +36,12 @@
  		<property name="basename" value="locale/messages" />
  	</bean>
  	
+ 	<tx:annotation-driven transaction-manager="transactionManager"/>
+ 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+ 		<property name="sessionFactory" ref="sessionFactory" />
+ 	</bean>
+ 	
  	<bean id="searchEngine" class="fr.free.naoj.svnlab.service.impl.SearchEngineImpl">
  		<constructor-arg value="${lucene.directoryIndex}" />
  	</bean>
- 	
- 	<!-- tx:annotation-driven />
- 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
- 		<property name="sessionFactory" ref="sessionFactory" />
- 	</bean-->
 </beans>

@@ -28,6 +28,7 @@ import org.tmatesoft.svn.core.io.SVNRepositoryFactory;
 import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
 import fr.free.naoj.svnlab.entity.Commit;
+import fr.free.naoj.svnlab.service.CommitService;
 import fr.free.naoj.svnlab.service.CommitsDetailsHolder;
 import fr.free.naoj.svnlab.service.RepositoryService;
 import fr.free.naoj.svnlab.service.UserService;
@@ -47,6 +48,9 @@ public class RepositoryServiceImpl implements RepositoryService {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CommitService commitService;
 	
 	private Log log = LogFactory.getLog(getClass());
 		
@@ -168,6 +172,10 @@ public class RepositoryServiceImpl implements RepositoryService {
 		Commit c = new Commit();
 		
 		if (entry != null) {
+			Commit commitFromDB = commitService.findByRevision(entry.getRevision());
+			if (commitFromDB != null) {
+				c.setId(commitFromDB.getId());
+			}
 			c.setPrincipal(entry.getAuthor());
 			c.setTitle(entry.getMessage());
 			Calendar commitedAd = Calendar.getInstance();
